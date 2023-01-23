@@ -18,6 +18,8 @@ function onAddTask(e) {
   editInput.type = "text";
 
   let editButton = document.createElement("button");
+  editButton.id = 'edit-button';
+ 
   editButton.type = "submit";
   editButton.className = "btn";
   editButton.innerHTML =
@@ -25,8 +27,19 @@ function onAddTask(e) {
   
   
 editButton.addEventListener('click',(e)=>{
-  
+  //console.log("$$$$$$$$$$$ "+inputtext.value);
+  //let input_text = String(inputtext.value);
+  //console.log("converted string ttype "+inputtext.value);
+  //if(input_text.length === "") {
+    inputtext.value = tasklist.innerText;
+    const parent = editButton.parentElement;
+    parent.parentElement.removeChild(parent);
+
+  //}
+  inputtext.value = "";
 })
+
+
 
 
   let deleteButton = document.createElement("button");
@@ -38,7 +51,7 @@ editButton.addEventListener('click',(e)=>{
     tasklist.removeChild(listItem);
   });
 
-
+ // inputtext.value = "";
 
 
   listItem.appendChild(checkBox);
