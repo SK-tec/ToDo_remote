@@ -43,7 +43,9 @@ input[type="checkbox"]:checked + label {
   margin-right: auto;
   margin-left: auto;
   color: #e6e6e6;
-  padding: 3.75rem 0;
+  padding: 1.00rem 0;
+  /*padding: 3.75rem 0;*/
+
 }
 
 .three-column-footer-contact-form-container .three-column-footer-contact-form::before, .three-column-footer-contact-form-container .three-column-footer-contact-form::after {
@@ -174,7 +176,7 @@ input[type="checkbox"]:checked + label {
 }
 
 .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group {
-  padding: 1.5rem 5 0 0;
+  padding: 1.5rem 0 0 0;
 }
 
 .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group input {
@@ -185,6 +187,11 @@ input[type="checkbox"]:checked + label {
 .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group textarea {
   border-bottom: 2px solid #cacaca;
 }
+
+/* .input-group textarea {
+  width: 30px;
+  height: 15px;
+} */
 
 .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right {
   text-align: right;
