@@ -18,6 +18,8 @@ function onAddTask(e) {
   editInput.type = "text";
 
   let editButton = document.createElement("button");
+  editButton.id = 'edit-button';
+ 
   editButton.type = "submit";
   editButton.className = "btn";
   editButton.innerHTML =
@@ -25,7 +27,9 @@ function onAddTask(e) {
   
   
 editButton.addEventListener('click',(e)=>{
-  
+    inputtext.value = tasklist.innerText;
+    const parent = editButton.parentElement;
+    parent.parentElement.removeChild(parent);
 })
 
 
@@ -37,7 +41,6 @@ editButton.addEventListener('click',(e)=>{
   deleteButton.addEventListener("click", (e) => {
     tasklist.removeChild(listItem);
   });
-
 
 
 
