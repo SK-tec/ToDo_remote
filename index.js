@@ -3,12 +3,12 @@ let inputtext = document.getElementById("Input1");
 let saveItem = "";
 let addButton = document.getElementById("btn-add");
 let editButton = document.getElementById("btn-edit");
-//editButton.disabled=true;
+
 
 // Add Function
 function onAddTask(e) {
   e.preventDefault();
-  if(inputtext.value==='') alert('Please add your Task')
+  if(inputtext.value=="") alert('Please add your Task')
   else{
   //creating list Item
   let listItem = document.createElement("li");
@@ -26,18 +26,19 @@ function onAddTask(e) {
   editButton.innerHTML =
     '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" ></i>';
 
-  editButton.addEventListener("click", (e) => {
-    
-    saveItem = listItem;
-    if(saveItem.childNodes[0].checked){
-      console.log(saveItem.childNodes[0].checked)
-     alert('Please uncheck the Task to Edit')
-    }
-    else{
-      addButton.disabled = true;
-    inputtext.value = listItem.innerText;
-    }
-  });
+ editButton.addEventListener('click',(e)=>{
+ 
+  saveItem = listItem;
+  console.log(saveItem)
+  if(saveItem.childNodes[0].checked){
+    console.log(saveItem.childNodes[0].checked)
+   alert('Please uncheck the Task to Edit')
+  }
+  else{
+    addButton.disabled = true;
+  inputtext.value = listItem.innerText;
+  }
+ })
 
   let deleteButton = document.createElement("button");
   deleteButton.type = "submit";
@@ -58,6 +59,7 @@ function onAddTask(e) {
 }
 //Update Function
 function onUpdateTask(e) {
+ 
   e.preventDefault();
   addButton.disabled=false;
   
@@ -65,12 +67,10 @@ function onUpdateTask(e) {
  
    alert('Please uncheck the Task to Edit')
   }
-  console.log( inputtext.value.lenth===0)
-  //if(inputtext.value==='') alert('Please select Task to Edit')
-  if(inputtext.value!=""){
+ 
+  else if(inputtext.value!=""){
   saveItem.childNodes[1].innerText = inputtext.value;
   inputtext.value = "";
   }
-  else alert('Please select Task to Edit');
-  
+  else alert('Please select Task to Edit');  
 }
