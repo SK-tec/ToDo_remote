@@ -17,16 +17,23 @@ function deleteOnClick(tasklist, listItem,label) {
 }
 
 function onAddTask(e) {
-  commonFunc();
+  commonFunc(true,null);
 
   let json_string = JSON.stringify(labels);
   console.log(json_string);
   localStorage.setItem('listitem', json_string);
 }
 
-function commonFunc(load_label = null) {
+function commonFunc(isaddTask = false,load_label=null) {
+
   let tasklist = document.getElementById("tasklist");
   let inputtext = document.getElementById("Input1");
+  if(isaddTask) {
+    if (inputtext.value.trim().length == '') {
+      return;
+    }
+  }
+  
   let listItem = document.createElement("li")
   let checkBox = document.createElement("input");
   checkBox.type = "checkbox";
@@ -70,7 +77,7 @@ function loadTaskList() {
   let tasklabels = JSON.parse(localStorage.getItem('listitem'));
   for (let i = 0; i < tasklabels.length; i++) {
     console.log(tasklabels[i]);
-    commonFunc(tasklabels[i]);
+    commonFunc(false,tasklabels[i]);
   }
 
 }
