@@ -66,36 +66,6 @@ function commonFunc(load_label = null) {
 
 }
 
-
-//"pop-up close window" section
-const popOutButton = document.getElementById("button")
-const bg_container = document.querySelector(".bg-popContainer")
-
-// Add event listeners 
-popOutButton.addEventListener("click", popOutNow);
-
-//document.addEventListener("mouseout", exitmouse);
-
-
-function popOutNow(e) {
-    e.preventDefault();
-    
-    document.querySelector(".bg-popContainer").style.display = "flex";    
-}
-
-
-const cancelPop = document.getElementById("close");
-cancelPop.addEventListener("click", CancelPopOut);
-
- 
-function CancelPopOut(e) {
-    e.preventDefault(); 
-    document.querySelector(".bg-popContainer").style.display = "none";
-
-}
-
-//END of pop-up sec.
-
 function loadTaskList() {
   let tasklabels = JSON.parse(localStorage.getItem('listitem'));
   for (let i = 0; i < tasklabels.length; i++) {
@@ -108,4 +78,3 @@ function loadTaskList() {
 (function () {
   loadTaskList();
 })();
-
