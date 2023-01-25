@@ -1,13 +1,18 @@
 
 let labels = [];
 
-function editOnClick(label, editButton) {
+function editOnClick(label, parent, inputtext, listItem) {
   inputtext.value = label.innerText;
-  const parent = editButton.parentElement;
+  tasklist.removeChild(listItem);
   parent.parentElement.removeChild(parent);
 }
 
-function deleteOnClick(tasklist, listItem) {
+function deleteOnClick(tasklist, listItem,label) {
+  var index = labels.indexOf(label);
+  if (index !== -1) {
+    labels.splice(index, 1);
+  }
+  localStorage.setItem('listitem', JSON.stringify(labels));
   tasklist.removeChild(listItem);
 }
 
@@ -42,14 +47,16 @@ function commonFunc(load_label = null) {
   editButton.className = "btn";
   editButton.innerHTML =
     '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" ></i>';
-  editButton.onClick = () => editOnClick(label, editButton);
+
+  const parent = editButton.parentElement;
+  editButton.onclick = () => editOnClick(label, parent,inputtext,listItem);
 
   let deleteButton = document.createElement("button");
   deleteButton.type = "submit";
   deleteButton.className = "btn ";
   deleteButton.innerHTML =
     '<i class="bi bi-trash" style="color:red;  font-size:20px"></i>';
-  deleteButton.onClick = () => deleteOnClick(tasklist, listItem);
+  deleteButton.onclick = () => deleteOnClick(tasklist, listItem,label.innerText);
   listItem.appendChild(checkBox);
   listItem.appendChild(label);
   listItem.appendChild(editButton);
