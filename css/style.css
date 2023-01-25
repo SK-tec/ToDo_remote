@@ -35,14 +35,15 @@ input[type="checkbox"]:checked + label {
 
 /*footer desgin*/
 .three-column-footer-contact-form-container {
-  background-color: #8a8a8a;  
+  background-color: #646363;  
 }
 
 .three-column-footer-contact-form-container .three-column-footer-contact-form {
+  margin-top: 2em;
   max-width: 75rem;
   margin-right: auto;
   margin-left: auto;
-  color: #e6e6e6;
+  color: #f1eeee;
   padding: 1.00rem 0;
   /*padding: 3.75rem 0;*/
 
@@ -246,6 +247,11 @@ input[type="checkbox"]:checked + label {
   .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right:last-child:not(:first-child) {
     float: right;
   }
+}
+
+#heading{
+  font-family: 'Lobster', cursive;
+  color:  rgb(223, 59, 59);
 }
 
 /*footer design */
