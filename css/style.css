@@ -260,3 +260,53 @@ input[type="checkbox"]:checked + label {
 }
 
 /*footer design */
+/* END of about section*/
+
+/* pop-up section
+#pop-up {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 20px;
+  color: #241304;
+  line-height: 1.6;
+}*/
+
+.bg-popContainer {
+  height: 100%;
+  width: 100%;
+  background-color: black(0, 0, 0, 0.7);
+  display: flex;
+  position:static;
+  top: 0;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+/*in this I used position absolute before*/
+.pop-box {
+  width: 50%;
+  height: auto;
+  background-color: #d8af7d;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.cont {
+  border-radius: 20px;
+}
+.closer {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 42px;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.closer:hover {
+  color: rgb(182, 28, 28);
+}
+/* END of pop-up section*/
