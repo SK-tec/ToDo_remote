@@ -267,7 +267,7 @@ section {
 
 .hero {
   background-color: bisque;
-  height: 40vh;
+  height: 20%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -295,6 +295,7 @@ section {
   margin: 1.5rem .75rem;
   font-size: 1.25rem;
   line-height: 1.5rem;
+  
 }
 
 #hero .button {
@@ -346,6 +347,14 @@ section {
   color: black;
   margin: 1.5rem 0;
   font-size: 1,5rem;
+}
+.pop-box p{
+  display:flex;
+  flex-direction: column;
+  
+  margin-left: 10%;
+  margin-right:10%;
+  text-align:justify;
 }
 
 .cont {
