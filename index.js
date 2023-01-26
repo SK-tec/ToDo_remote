@@ -29,27 +29,39 @@ function CancelPopOut(e) {
 
 let labels = [];
 
-function editOnClick(label, parent, inputtext, listItem) {
-  inputtext.value = label.innerText;
-  tasklist.removeChild(listItem);
-  parent.parentElement.removeChild(parent);
-}
-
-function deleteOnClick(tasklist, listItem,label) {
+function delete_label(label) {
+  print_labels("delete_label start");
+  console.log("label to be deleted "+label);
   var index = labels.indexOf(label);
   if (index !== -1) {
     labels.splice(index, 1);
   }
   localStorage.setItem('listitem', JSON.stringify(labels));
+  print_labels("delete_label end");
+}
+
+function editOnClick(label, parent, inputtext, listItem) {
+  delete_label(label.innerText);
+  inputtext.value = label.innerText;
+  tasklist.removeChild(listItem);
+  //parent.parentElement.removeChild(parent);
+}
+
+function print_labels(func_name) {
+  let json_string = JSON.stringify(labels);
+  console.log(func_name+": "+json_string);
+}
+
+function deleteOnClick(tasklist, listItem,label) {
+  delete_label(label);
   tasklist.removeChild(listItem);
 }
 
 function onAddTask(e) {
+  print_labels("onAddTask start");
   commonFunc();
-
-  let json_string = JSON.stringify(labels);
-  console.log(json_string);
-  localStorage.setItem('listitem', json_string);
+  localStorage.setItem('listitem',  JSON.stringify(labels));
+  print_labels("onAddTask end");
 }
 
 function commonFunc(load_label = null) {
@@ -66,6 +78,9 @@ function commonFunc(load_label = null) {
   } //this is load page scenario
   else if (load_label != null) {
     label.innerText = load_label;
+  }
+  if( label.innerText === '' ) {
+    return;
   }
   let editInput = document.createElement("input");
   editInput.type = "text";
@@ -95,7 +110,7 @@ function commonFunc(load_label = null) {
 }
 
 function loadTaskList() {
-  let tasklabels = JSON.parse(localStorage.getItem('listitem'));
+ let tasklabels = JSON.parse(localStorage.getItem('listitem'));
   for (let i = 0; i < tasklabels.length; i++) {
     console.log(tasklabels[i]);
     commonFunc(tasklabels[i]);
