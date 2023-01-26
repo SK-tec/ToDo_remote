@@ -110,10 +110,10 @@ function commonFunc(load_label = null) {
 }
 
 function loadTaskList() {
-  labels = JSON.parse(localStorage.getItem('listitem'));
-  for (let i = 0; i < labels.length; i++) {
-    console.log(labels[i]);
-    commonFunc(labels[i]);
+ let tasklabels = JSON.parse(localStorage.getItem('listitem'));
+  for (let i = 0; i < tasklabels.length; i++) {
+    console.log(tasklabels[i]);
+    commonFunc(tasklabels[i]);
   }
 
 }
