@@ -27,83 +27,86 @@ function CancelPopOut(e) {
 
 //END of pop-up sec.
 
-let labels = [];
+let tasks = [];
+let tasklist = document.getElementById("tasklist");
+let inputtext = document.getElementById("Input1");
 
-function editOnClick(label, parent, inputtext, listItem) {
-  inputtext.value = label.innerText;
-  tasklist.removeChild(listItem);
-  parent.parentElement.removeChild(parent);
-}
-
-function deleteOnClick(tasklist, listItem,label) {
-  var index = labels.indexOf(label);
-  if (index !== -1) {
-    labels.splice(index, 1);
-  }
-  localStorage.setItem('listitem', JSON.stringify(labels));
-  tasklist.removeChild(listItem);
-}
-
-function onAddTask(e) {
-  commonFunc();
-
-  let json_string = JSON.stringify(labels);
-  console.log(json_string);
-  localStorage.setItem('listitem', json_string);
-}
-
-function commonFunc(load_label = null) {
-  let tasklist = document.getElementById("tasklist");
-  let inputtext = document.getElementById("Input1");
-  let listItem = document.createElement("li")
-  let checkBox = document.createElement("input");
-  checkBox.type = "checkbox";
-  let label = document.createElement("label");
-  //this is add text scenario
-  if (inputtext.value.trim().length != '') {
-    label.innerText = inputtext.value;
-    labels.push(label.innerText);
-  } //this is load page scenario
-  else if (load_label != null) {
-    label.innerText = load_label;
-  }
-  let editInput = document.createElement("input");
-  editInput.type = "text";
-  let editButton = document.createElement("button");
-  editButton.id = 'edit-button';
-  editButton.type = "submit";
-  editButton.className = "btn";
-  editButton.innerHTML =
-    '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" ></i>';
-
-  const parent = editButton.parentElement;
-  editButton.onclick = () => editOnClick(label, parent,inputtext,listItem);
-
-  let deleteButton = document.createElement("button");
-  deleteButton.type = "submit";
-  deleteButton.className = "btn ";
-  deleteButton.innerHTML =
-    '<i class="bi bi-trash" style="color:red;  font-size:20px"></i>';
-  deleteButton.onclick = () => deleteOnClick(tasklist, listItem,label.innerText);
-  listItem.appendChild(checkBox);
-  listItem.appendChild(label);
-  listItem.appendChild(editButton);
-  listItem.appendChild(deleteButton);
-  tasklist.appendChild(listItem);
-  inputtext.value = '';
-
-}
-
-function loadTaskList() {
-  let tasklabels = JSON.parse(localStorage.getItem('listitem'));
-  for (let i = 0; i < tasklabels.length; i++) {
-    console.log(tasklabels[i]);
-    commonFunc(tasklabels[i]);
-  }
-
+function saveToLocalStorage() {
+  localStorage.setItem("task", JSON.stringify(tasks));
 }
 
 (function () {
-  loadTaskList();
+  tasks = JSON.parse(localStorage.getItem("task")) || [];
+  renderList();
 })();
 
+function onAddTask(e) {
+  e.preventDefault();
+  const task = inputtext.value;
+  if (task) {
+    tasks.push(task);
+    saveToLocalStorage();
+    renderList();
+  }
+}
+function onEdit(index, task, listItem, listLabel, updateButton) {
+  const updateInput = document.createElement("input");
+  updateInput.type = "text";
+  updateInput.value = task;
+  updateInput.id = "update-input";
+  listItem.replaceChild(updateInput, listLabel);
+  const saveButton = document.createElement("button");
+  saveButton.type = "submit";
+  saveButton.className = "btn ";
+  saveButton.innerHTML =
+    '<i class="bi bi-save" style="color:blue; font-size:20px;padding-right: 5px;">Save</i>';
+  saveButton.addEventListener("click", () => {
+    const newTask = updateInput.value;
+    listLabel.innerHTML = newTask;
+    listItem.replaceChild(listLabel, updateInput);
+    listItem.replaceChild(updateButton, saveButton);
+    tasks = tasks.map((theTask, i) => {
+      if (index === i) {
+        return newTask;
+      } else {
+        return theTask;
+      }
+    });
+    saveToLocalStorage();
+  });
+  listItem.replaceChild(saveButton, updateButton);
+}
+function onDelete(index, listItem) {
+  tasks.splice(index, 1);
+  saveToLocalStorage();
+  tasklist.removeChild(listItem);
+}
+function renderList() {
+  tasklist.innerHTML = "";
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+    let checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    const label = document.createElement("label");
+    label.innerHTML = task;
+    const editButton = document.createElement("button");
+    editButton.id = "edit-button";
+    editButton.type = "submit";
+    editButton.className = "btn";
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "submit";
+    deleteButton.className = "btn ";
+    li.appendChild(checkBox);
+    li.appendChild(label);
+    li.appendChild(editButton);
+    li.appendChild(deleteButton);
+    editButton.onclick = () => onEdit(index, task, li, label, editButton);
+    deleteButton.onclick = () => onDelete(index, li);
+    editButton.innerHTML =
+      '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" >Edit</i>';
+    deleteButton.innerHTML =
+      '<i class="bi bi-trash" style="color:red;  font-size:20px">Delete</i>';
+    tasklist.appendChild(li);
+    inputtext.value = "";
+  });
+}
