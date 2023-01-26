@@ -9,16 +9,19 @@ header {
   height: 100px;
   
 }
+#update-input{
+  width: 500px;
+}
 li {
   /*overflow: hidden;*/
-  padding: 20px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #eee;
   color: rebeccapurple;
 }
 li > label {
   font-size: 18px;
   line-height: 20px;
-  width: 800px;
+  width: 500px;
   padding: 0 0 0 15px;
 }
 li > input[type="checkbox"] {
@@ -28,7 +31,7 @@ li > input[type="checkbox"] {
 }
 input[type="checkbox"]:checked + label {
   text-decoration: line-through;
-  background: rgb(247, 129, 129);
+  background: rgb(228, 202, 202);
   color: white;
   
 }
