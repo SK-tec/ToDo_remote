@@ -1,28 +1,22 @@
 //"pop-up close window" section
-const popOutButton = document.getElementById("button")
-const bg_container = document.querySelector(".bg-popContainer")
+const popOutButton = document.getElementById("button");
+const bg_container = document.querySelector(".bg-popContainer");
 
-// Add event listeners 
+// Add event listeners
 popOutButton.addEventListener("click", popOutNow);
 
-//document.addEventListener("mouseout", exitmouse);
-
-
 function popOutNow(e) {
-    e.preventDefault();
-    
-    document.querySelector(".bg-popContainer").style.display = "flex";    
-}
+  e.preventDefault();
 
+  document.querySelector(".bg-popContainer").style.display = "flex";
+}
 
 const cancelPop = document.getElementById("close");
 cancelPop.addEventListener("click", CancelPopOut);
 
- 
 function CancelPopOut(e) {
-    e.preventDefault(); 
-    document.querySelector(".bg-popContainer").style.display = "none";
-
+  e.preventDefault();
+  document.querySelector(".bg-popContainer").style.display = "none";
 }
 
 //END of pop-up sec.
@@ -44,7 +38,7 @@ function onAddTask(e) {
   e.preventDefault();
   const task = inputtext.value;
   if (task) {
-    tasks.push(task);
+    tasks.push({ text: task, isCompleted: false });
     saveToLocalStorage();
     renderList();
   }
@@ -67,7 +61,7 @@ function onEdit(index, task, listItem, listLabel, updateButton) {
     listItem.replaceChild(updateButton, saveButton);
     tasks = tasks.map((theTask, i) => {
       if (index === i) {
-        return newTask;
+        return { text: newTask, isCompleted: false };
       } else {
         return theTask;
       }
@@ -81,14 +75,26 @@ function onDelete(index, listItem) {
   saveToLocalStorage();
   tasklist.removeChild(listItem);
 }
+
+function onChecked(index, editButton) {
+  tasks[index].isCompleted = !tasks[index].isCompleted;
+  if (tasks[index].isCompleted) {
+    editButton.disabled = true;
+  } else {
+    editButton.disabled = false;
+  }
+  saveToLocalStorage();
+}
+
 function renderList() {
   tasklist.innerHTML = "";
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
     let checkBox = document.createElement("input");
     checkBox.type = "checkbox";
+
     const label = document.createElement("label");
-    label.innerHTML = task;
+    label.innerHTML = task.text;
     const editButton = document.createElement("button");
     editButton.id = "edit-button";
     editButton.type = "submit";
@@ -100,12 +106,14 @@ function renderList() {
     li.appendChild(label);
     li.appendChild(editButton);
     li.appendChild(deleteButton);
-    editButton.onclick = () => onEdit(index, task, li, label, editButton);
+    editButton.onclick = () => onEdit(index, task.text, li, label, editButton);
     deleteButton.onclick = () => onDelete(index, li);
     editButton.innerHTML =
       '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" >Edit</i>';
     deleteButton.innerHTML =
       '<i class="bi bi-trash" style="color:red;  font-size:20px">Delete</i>';
+    checkBox.checked = task.isCompleted;
+    checkBox.onchange = (e) => onChecked(index, editButton);
     tasklist.appendChild(li);
     inputtext.value = "";
   });
