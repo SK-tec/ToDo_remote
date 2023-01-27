@@ -39,6 +39,7 @@ function onAddTask(e) {
   const task = inputtext.value;
   if (task) {
     tasks.push({ text: task, isCompleted: false });
+ 
     saveToLocalStorage();
     renderList();
   }
@@ -53,7 +54,7 @@ function onEdit(index, task, listItem, listLabel, updateButton) {
   saveButton.type = "submit";
   saveButton.className = "btn ";
   saveButton.innerHTML =
-    '<i class="bi bi-save" style="color:blue; font-size:20px;padding-right: 5px;">Save</i>';
+    '<i class="bi bi-save" style="color:blue; font-size:20px;padding-right: 5px;"></i>';
   saveButton.addEventListener("click", () => {
     const newTask = updateInput.value;
     listLabel.innerHTML = newTask;
@@ -77,7 +78,7 @@ function onDelete(index, listItem) {
 }
 
 function onChecked(index, editButton) {
-  tasks[index].isCompleted = !tasks[index].isCompleted;
+   tasks[index].isCompleted = !tasks[index].isCompleted;
   if (tasks[index].isCompleted) {
     editButton.disabled = true;
   } else {
@@ -99,6 +100,7 @@ function renderList() {
     editButton.id = "edit-button";
     editButton.type = "submit";
     editButton.className = "btn";
+    editButton.disabled=false;
     const deleteButton = document.createElement("button");
     deleteButton.type = "submit";
     deleteButton.className = "btn ";
@@ -109,9 +111,10 @@ function renderList() {
     editButton.onclick = () => onEdit(index, task.text, li, label, editButton);
     deleteButton.onclick = () => onDelete(index, li);
     editButton.innerHTML =
-      '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" >Edit</i>';
+      '<i class="bi bi-pencil" style="color:blue; font-size:20px;padding-right: 5px;" ></i>';
     deleteButton.innerHTML =
-      '<i class="bi bi-trash" style="color:red;  font-size:20px">Delete</i>';
+      '<i class="bi bi-trash" style="color:red;  font-size:20px"></i>';
+    editButton.disabled =task.isCompleted;
     checkBox.checked = task.isCompleted;
     checkBox.onchange = (e) => onChecked(index, editButton);
     tasklist.appendChild(li);
